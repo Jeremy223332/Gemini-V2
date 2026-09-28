@@ -1,127 +1,172 @@
-```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>My AI</title>
+
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-    <div class="app">
+<div class="app">
 
-        <!-- Sidebar -->
-        <aside class="sidebar">
-            <div class="logo">
+    <aside class="sidebar">
+
+        <div class="logo">
+            ✨ My AI
+        </div>
+
+        <button class="new-chat">
+            ＋ New chat
+        </button>
+
+        <div class="sidebar-section">
+            <p>Recent chats</p>
+
+            <button class="chat-item">
+                🤖 AI Website
+            </button>
+
+            <button class="chat-item">
+                ▶️ YouTube
+            </button>
+
+            <button class="chat-item">
+                📁 Google Drive
+            </button>
+        </div>
+
+        <div class="sidebar-bottom">
+            <button>⚙️ Settings</button>
+        </div>
+
+    </aside>
+
+
+    <main class="main">
+
+        <header class="topbar">
+
+            <div class="model-name">
                 ✨ My AI
             </div>
 
-            <button class="new-chat">
-                ＋ New chat
+            <button class="new-chat-top">
+                ＋
             </button>
 
-            <div class="sidebar-section">
-                <p>Recent chats</p>
-
-                <button class="chat-item">
-                    🤖 AI Website
-                </button>
-
-                <button class="chat-item">
-                    🎵 YouTube
-                </button>
-            </div>
-
-            <div class="sidebar-bottom">
-                <button>⚙️ Settings</button>
-            </div>
-        </aside>
+        </header>
 
 
-        <!-- Main AI area -->
-        <main class="main">
+        <section class="chat">
 
-            <header class="topbar">
-                <div class="model-name">
-                    ✨ My AI
+            <div class="welcome">
+
+                <div class="welcome-icon">
+                    ✨
                 </div>
 
-                <button class="new-chat-top">
-                    ＋
-                </button>
-            </header>
+                <h1>How can I help?</h1>
 
-
-            <!-- Chat -->
-            <section class="chat">
-
-                <div class="welcome">
-                    <div class="welcome-icon">✨</div>
-
-                    <h1>How can I help?</h1>
-
-                    <p>
-                        Ask me anything or connect me to your favorite apps.
-                    </p>
-                </div>
-
-
-                <!-- Example connection card -->
-                <div class="connection-card" id="connectionCard">
-
-                    <div class="connection-logo">
-                        <!-- YouTube logo will go here -->
-                        <span>▶</span>
-                    </div>
-
-                    <div class="connection-info">
-                        <strong>YouTube</strong>
-                        <span id="connectionStatus">
-                            Ready to connect
-                        </span>
-                    </div>
-
-                    <button id="connectButton">
-                        Connect
-                    </button>
-
-                </div>
-
-            </section>
-
-
-            <!-- Message box -->
-            <footer class="input-area">
-
-                <div class="input-box">
-
-                    <textarea
-                        id="messageInput"
-                        placeholder="Ask anything..."
-                        rows="1"
-                    ></textarea>
-
-                    <button id="sendButton">
-                        ➤
-                    </button>
-
-                </div>
-
-                <p class="disclaimer">
-                    My AI can make mistakes. Check important information.
+                <p>
+                    Ask me anything or connect me to your favorite apps.
                 </p>
 
-            </footer>
-
-        </main>
-
-    </div>
+            </div>
 
 
-    <script src="script.js"></script>
+            <!-- YouTube -->
+
+            <div class="connection-card">
+
+                <div class="connection-logo youtube-logo">
+                    ▶
+                </div>
+
+                <div class="connection-info">
+
+                    <strong>YouTube</strong>
+
+                    <span id="youtubeStatus">
+                        Ready to connect
+                    </span>
+
+                </div>
+
+                <button
+                    class="connect-button"
+                    id="youtubeButton"
+                    onclick="connectService('youtube')">
+
+                    Connect
+
+                </button>
+
+            </div>
+
+
+            <!-- Google Drive -->
+
+            <div class="connection-card">
+
+                <div class="connection-logo drive-logo">
+                    ◆
+                </div>
+
+                <div class="connection-info">
+
+                    <strong>Google Drive</strong>
+
+                    <span id="driveStatus">
+                        Ready to connect
+                    </span>
+
+                </div>
+
+                <button
+                    class="connect-button"
+                    id="driveButton"
+                    onclick="connectService('drive')">
+
+                    Connect
+
+                </button>
+
+            </div>
+
+        </section>
+
+
+        <footer class="input-area">
+
+            <div class="input-box">
+
+                <textarea
+                    id="messageInput"
+                    placeholder="Ask anything..."
+                    rows="1"></textarea>
+
+                <button id="sendButton">
+                    ➤
+                </button>
+
+            </div>
+
+            <p class="disclaimer">
+                My AI can make mistakes. Check important information.
+            </p>
+
+        </footer>
+
+    </main>
+
+</div>
+
+
+<script src="script.js"></script>
 
 </body>
 </html>
-```
