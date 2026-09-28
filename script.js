@@ -1,44 +1,78 @@
 const messageInput = document.getElementById("messageInput");
 const sendButton = document.getElementById("sendButton");
-const connectButton = document.getElementById("connectButton");
-const connectionStatus = document.getElementById("connectionStatus");
 
-let youtubeConnected = false;
+const services = {
+    youtube: {
+        name: "YouTube",
+        status: "youtubeStatus",
+        button: "youtubeButton"
+    },
 
-function connectYouTube() {
-    if (youtubeConnected) {
-        connectionStatus.textContent = "YouTube is already connected";
+    drive: {
+        name: "Google Drive",
+        status: "driveStatus",
+        button: "driveButton"
+    }
+};
+
+
+// Connect a service
+function connectService(serviceId) {
+
+    const service = services[serviceId];
+
+    if (!service) {
         return;
     }
 
-    connectButton.disabled = true;
-    connectButton.textContent = "Connecting...";
-    connectionStatus.textContent = "Connecting to YouTube...";
+    const status = document.getElementById(service.status);
+    const button = document.getElementById(service.button);
+
+    button.disabled = true;
+    button.textContent = "Connecting...";
+    status.textContent = "Connecting to " + service.name + "...";
 
     setTimeout(function() {
-        connectionStatus.textContent = "✓ YouTube connected";
-        connectButton.textContent = "Connected";
-        youtubeConnected = true;
+
+        status.textContent = "✓ " + service.name + " connected";
+
+        button.textContent = "Connected";
+
+        button.disabled = true;
+
     }, 2500);
 }
 
-connectButton.addEventListener("click", connectYouTube);
 
+// Add chat message
 function addMessage(sender, text) {
+
     const chat = document.querySelector(".chat");
 
     const message = document.createElement("div");
+
     message.className = "message";
 
     message.innerHTML =
-        '<div class="message-sender">' + sender + '</div>' +
-        '<div class="message-text">' + text + '</div>';
+        '<div class="message-sender">' +
+        sender +
+        '</div>' +
+
+        '<div class="message-text">' +
+        text +
+        '</div>';
 
     chat.appendChild(message);
-    message.scrollIntoView({ behavior: "smooth" });
+
+    message.scrollIntoView({
+        behavior: "smooth"
+    });
 }
 
+
+// Send message
 function sendMessage() {
+
     const message = messageInput.value.trim();
 
     if (!message) {
@@ -46,42 +80,76 @@ function sendMessage() {
     }
 
     addMessage("You", message);
+
     messageInput.value = "";
 
     setTimeout(function() {
-        const lowerMessage = message.toLowerCase();
+
+        const text = message.toLowerCase();
 
         if (
-            lowerMessage.includes("connect") &&
-            lowerMessage.includes("youtube")
+            text.includes("youtube") &&
+            text.includes("connect")
         ) {
+
             addMessage(
                 "My AI",
                 "Sure! I'll connect to YouTube for you."
             );
 
-            connectYouTube();
+            connectService("youtube");
 
-        } else if (lowerMessage.includes("hello")) {
-            addMessage(
-                "My AI",
-                "Hello! 👋 What would you like to do?"
-            );
-
-        } else {
-            addMessage(
-                "My AI",
-                "I'm still being built! 🤖 Try asking me to connect to YouTube."
-            );
         }
+
+        else if (
+            text.includes("drive") &&
+            text.includes("connect")
+        ) {
+
+            addMessage(
+                "My AI",
+                "Sure! I'll connect to Google Drive for you."
+            );
+
+            connectService("drive");
+
+        }
+
+        else if (text.includes("hello")) {
+
+            addMessage(
+                "My AI",
+                "Hello! 👋 What would you like to connect?"
+            );
+
+        }
+
+        else {
+
+            addMessage(
+                "My AI",
+                "I'm still being built! 🤖 Try asking me to connect to YouTube or Google Drive."
+            );
+
+        }
+
     }, 700);
 }
 
+
+// Send button
 sendButton.addEventListener("click", sendMessage);
 
+
+// Enter key
 messageInput.addEventListener("keydown", function(event) {
+
     if (event.key === "Enter" && !event.shiftKey) {
+
         event.preventDefault();
+
         sendMessage();
+
     }
+
 });
