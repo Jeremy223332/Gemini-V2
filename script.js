@@ -1,19 +1,11 @@
-```javascript
 const messageInput = document.getElementById("messageInput");
 const sendButton = document.getElementById("sendButton");
-
 const connectButton = document.getElementById("connectButton");
 const connectionStatus = document.getElementById("connectionStatus");
 
 let youtubeConnected = false;
 
-
-// -----------------------------
-// YouTube connection
-// -----------------------------
-
 function connectYouTube() {
-
     if (youtubeConnected) {
         connectionStatus.textContent = "YouTube is already connected";
         return;
@@ -21,35 +13,32 @@ function connectYouTube() {
 
     connectButton.disabled = true;
     connectButton.textContent = "Connecting...";
-
     connectionStatus.textContent = "Connecting to YouTube...";
 
-    // Simulate connection time
-    setTimeout(() => {
-
+    setTimeout(function() {
         connectionStatus.textContent = "✓ YouTube connected";
-
         connectButton.textContent = "Connected";
-
         youtubeConnected = true;
-
-        connectButton.style.background = "#2ecc71";
-        connectButton.style.color = "white";
-
     }, 2500);
 }
 
-
-// Connect button
 connectButton.addEventListener("click", connectYouTube);
 
+function addMessage(sender, text) {
+    const chat = document.querySelector(".chat");
 
-// -----------------------------
-// AI message system
-// -----------------------------
+    const message = document.createElement("div");
+    message.className = "message";
+
+    message.innerHTML =
+        '<div class="message-sender">' + sender + '</div>' +
+        '<div class="message-text">' + text + '</div>';
+
+    chat.appendChild(message);
+    message.scrollIntoView({ behavior: "smooth" });
+}
 
 function sendMessage() {
-
     const message = messageInput.value.trim();
 
     if (!message) {
@@ -57,19 +46,15 @@ function sendMessage() {
     }
 
     addMessage("You", message);
-
     messageInput.value = "";
 
-    // Small delay so it feels like the AI is thinking
-    setTimeout(() => {
-
+    setTimeout(function() {
         const lowerMessage = message.toLowerCase();
 
         if (
             lowerMessage.includes("connect") &&
             lowerMessage.includes("youtube")
         ) {
-
             addMessage(
                 "My AI",
                 "Sure! I'll connect to YouTube for you."
@@ -78,26 +63,25 @@ function sendMessage() {
             connectYouTube();
 
         } else if (lowerMessage.includes("hello")) {
-
             addMessage(
                 "My AI",
                 "Hello! 👋 What would you like to do?"
             );
 
         } else {
-
             addMessage(
                 "My AI",
                 "I'm still being built! 🤖 Try asking me to connect to YouTube."
             );
-
         }
-
     }, 700);
 }
 
+sendButton.addEventListener("click", sendMessage);
 
-// -----------------------------
-// Add messages to chat
-// ---------------------------
-```
+messageInput.addEventListener("keydown", function(event) {
+    if (event.key === "Enter" && !event.shiftKey) {
+        event.preventDefault();
+        sendMessage();
+    }
+});
